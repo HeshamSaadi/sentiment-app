@@ -53,7 +53,14 @@ def load_model_from_github():
         tokenizer_path = os.path.join("models", "simplified_lstm_20250612-172438_tokenizer.pickle")
         label_mapping_path = os.path.join("models", "simplified_lstm_20250612-172438_label_mapping.pickle")
 
-        model = tf.keras.models.load_model(model_path)
+        with open(label_mapping_path, "rb") as handle:
+            label_mapping = pickle.load(handle)
+
+        # Register 'NotEqual' as a custom object if it's a known TensorFlow operation
+        # This is a common issue when loading models saved with newer TF versions or specific ops
+        custom_objects = {"NotEqual": tf.math.not_equal}
+        with tf.keras.utils.custom_object_scope(custom_objects):
+            model = tf.keras.models.load_model(model_path)
         with open(tokenizer_path, "rb") as handle:
             tokenizer = pickle.load(handle)
         with open(label_mapping_path, "rb") as handle:
