@@ -2,5 +2,6 @@ streamlit
 tensorflow==2.19.0
 numpy
 requests
+tensorflow-addons==0.23.0
 
 
