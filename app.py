@@ -46,7 +46,7 @@ def load_model_from_github():
 
         # Extract the zip file
         with zipfile.ZipFile(zip_path, "r") as zip_ref:
-            zip_ref.extractall("models")
+            zip_ref.extractall(".")
 
         # Load the model, tokenizer, and label mapping
         model_path = os.path.join("models", "simplified_lstm_20250612-172438_best.h5")
